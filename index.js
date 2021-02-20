@@ -1,7 +1,13 @@
+// Requirements
 const { json } = require('body-parser');
 const express = require('express');
 const { Database } = require('./db/db.js');
 const bodyParser = require('body-parser');
+const {
+  userValidation,
+} = require('./db/schema/schema-validation.js');
+
+//App configuration
 const app = express();
 require('dotenv').config();
 
@@ -10,17 +16,19 @@ app.use(bodyParser.json());
 
 //Database instance
 const db = new Database();
-app.post('/api/create-account/', (req, res) => {
-  const { username, name, birth_date, phone, email } = req.body;
+app.post('/api/create-account/', async (req, res) => {
+  const { username, password, email } = req.body;
+
   const user = {
     username,
-    name,
-    birth_date,
-    phone,
+    password,
     email,
-    created_date: Date.now(),
+    // created_date: Date.now(),
   };
-  res.json(user.created_date);
+
+  // console.log(await userValidation(user));
+  res.send(await userValidation(user));
+  // For parsing 👇
   // res.json(Date(user.created_date));
   // res.json(Date(user.created_date).getTime());
 });

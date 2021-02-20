@@ -1,28 +1,17 @@
 const Joi = require('joi');
 
-function userValidation(userData) {
-    const schema = Joi.object({
-        username: Joi.string()
-            .alphanum()
-            .min(3)
-            .max(30)
-            .required(),
-        password: Joi.string()
-            .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
-        birth_year: Joi.number()
-            .integer()
-            .min(1900)
-            .max(2013),
-        email: Joi.string()
-            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-    })
+async function userValidation(userData) {
+  const schema = Joi.object({
+    username: Joi.string().alphanum().min(3).max(30).required(),
+    password: Joi.string().min(5).max(50),
+    email: Joi.string().email(),
+  });
 
-    try {
-        return await schema.validateAsync(user);
-    }
-    catch (err) { 
-        return err;
-    }
+  try {
+    return await schema.validateAsync(userData);
+  } catch (err) {
+    return err.message;
+  }
 }
 
-module.exports = { userValidation }
+module.exports = { userValidation };
