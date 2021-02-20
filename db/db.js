@@ -1,21 +1,32 @@
+const { groupCollapsed } = require('console');
+const { create } = require('domain');
+const { default: monk } = require('monk');
+const { monitorEventLoopDelay } = require('perf_hooks');
+
 require('dotenv').config();
 
 class Database {
   constructor() {
-    this.connection = this.createConnection();
+    this.db = this.createConnection();
   }
 
   createConnection() {
     const monk = require('monk');
     // Connection URL
-    const url = process.env.DB_SECRET_KEY;
-
-    const db = monk(url)
-      .then(() => {
-        console.log('db Connected!');
-      })
-      .catch((err) => console.log(err));
+    const db = monk(process.env.DB_SECRET_KEY);
     return db;
+  }
+
+  async createUser(userData) {
+    const users = await this.db.get('users');
+    users
+      .insert(userData)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        throw err;
+      });
   }
 }
 

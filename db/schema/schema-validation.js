@@ -1,16 +1,19 @@
 const Joi = require('joi');
 
 async function userValidation(userData) {
+  const regex = `^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$`;
+
   const schema = Joi.object({
     username: Joi.string().alphanum().min(3).max(30).required(),
-    password: Joi.string().min(5).max(50),
-    email: Joi.string().email(),
+    password: Joi.string().required().min(8).max(50),
+    email: Joi.string().email().required(),
   });
 
   try {
-    return await schema.validateAsync(userData);
+    await schema.validateAsync(userData);
+    return true;
   } catch (err) {
-    return err.message;
+    throw err;
   }
 }
 
