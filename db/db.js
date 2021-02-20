@@ -1,18 +1,22 @@
 require('dotenv').config();
 
-// Connection URL
-// class Database {
-//   constructor() {
-//     this.db = createConnection();
-//   }
-// }
+class Database {
+  constructor() {
+    this.connection = this.createConnection();
+  }
 
-function createConnection() {
-  const db = require('monk')(process.env.DB_SECRET_KEY);
-  db.then(() => {
-    console.log('Connected correctly to server');
-  });
-  db.close();
+  createConnection() {
+    const monk = require('monk');
+    // Connection URL
+    const url = process.env.DB_SECRET_KEY;
+
+    const db = monk(url)
+      .then(() => {
+        console.log('db Connected!');
+      })
+      .catch((err) => console.log(err));
+    return db;
+  }
 }
 
-module.exports = { createConnection };
+module.exports = { Database };
