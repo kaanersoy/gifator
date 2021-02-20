@@ -12,21 +12,17 @@ class Database {
 
   createConnection() {
     const monk = require('monk');
-    // Connection URL
     const db = monk(process.env.DB_SECRET_KEY);
     return db;
   }
 
   async createUser(userData) {
+    // control username!!!!!
     const users = await this.db.get('users');
-    users
-      .insert(userData)
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => {
-        throw err;
-      });
+    const response = await users.insert(userData).catch((err) => {
+      throw err;
+    });
+    return response;
   }
 }
 

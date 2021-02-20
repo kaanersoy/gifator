@@ -29,8 +29,9 @@ app.post('/api/create-account/', async (req, res) => {
   };
   try {
     await userValidation(user);
-    const databaseResponse = await db.createUser({ ...user, created_at: new Date() });
-    res.status(201).send({ databaseResponse });
+    const response = await db.createUser({ ...user, created_at: new Date() });
+    console.log(response);
+    res.status(201).json(response);
   } catch (err) {
     res.status(400).send({
       status: 400,
