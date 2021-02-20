@@ -1,8 +1,3 @@
-const { groupCollapsed } = require('console');
-const { create } = require('domain');
-const { default: monk } = require('monk');
-const { monitorEventLoopDelay } = require('perf_hooks');
-
 require('dotenv').config();
 
 class Database {
@@ -17,12 +12,13 @@ class Database {
   }
 
   async createUser(userData) {
-    // control username!!!!!
     const users = await this.db.get('users');
-    const response = await users.insert(userData).catch((err) => {
-      throw err;
-    });
-    return response;
+    const isExists = await users.findOne({ username: userData.username });
+    if (isExists) {
+      throw new Error(`${isExists.username} is created before!`);
+    }
+    const user = await users.insert(userData);
+    return user;
   }
 }
 
