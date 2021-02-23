@@ -4,13 +4,23 @@ const { Database } = require('./db/db.js');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const { userValidation } = require('./db/schema/schema-validation.js');
-const { response } = require('express');
 
 //App configuration
 const app = express();
 require('dotenv').config();
 
+// passport.use(new Strategy(
+//   function(username, password, cb) {
+//     db.users.findByUsername(username, function(err, user) {
+//       if (err) { return cb(err); }
+//       if (!user) { return cb(null, false); }
+//       if (user.password != password) { return cb(null, false); }
+//       return cb(null, user);
+//     });
+// }));
+
 // Middlewares
+app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(
   helmet({
@@ -40,6 +50,14 @@ app.post('/api/create-account/', async (req, res) => {
     });
   }
 });
+
+app.post(
+  '/api/login',
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  (req, res) => {
+    res.redirect('/');
+  }
+);
 
 //Process env destructure
 const { PORT } = process.env;
