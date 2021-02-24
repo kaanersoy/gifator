@@ -33,16 +33,15 @@ router.post('/login/', async (req, res) => {
   const { username, password } = req.body;
   const userFromDB = await db.checkIsUserExists(username);
   if (userFromDB.error) return res.send(userFromDB);
-  try {
-    const isMatch = await bcrypt.compare(password, userFromDB.cryptedPass);
-    if (isMatch) {
-      res.status(200).send({
-        message: 'U logged ın🤘🤘💖',
-      });
-    }
-  } catch (err) {
-    res.status(400).send({ err });
-  }
+  const isMatch = await bcrypt.compare(password, userFromDB.password);
+  if (!isMatch)
+    return res.status(400).send({
+      status: 400,
+      message: 'Bad Request😡',
+    });
+  res.status(200).send({
+    message: 'U logged ın🤘🤘💖',
+  });
 });
 
 module.exports = { router };
