@@ -1,4 +1,4 @@
-# Gifator | Gif chat app!
+# Gifator | GIF Chat App!
 
 Allows to you messaging with your friends only using GIFs
 
