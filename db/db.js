@@ -1,4 +1,5 @@
 require('dotenv').config();
+const bcrypt = require('bcrypt');
 class Database {
   constructor() {
     this.db = this.createConnection();
@@ -11,6 +12,8 @@ class Database {
   }
 
   async createUser(userData) {
+    const salt = 10;
+    const cryptedPass = await bcrypt.hash(userData.password, salt);
     const users = await this.db.get('users');
     const isExists = await users.findOne({
       username: userData.username,
@@ -24,6 +27,7 @@ class Database {
         },
       };
     }
+    userData.password = cryptedPass;
     const user = await users.insert(userData);
     return user;
   }

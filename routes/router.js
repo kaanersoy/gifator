@@ -5,36 +5,43 @@ const router = require('express').Router();
 const { userValidation } = require('../models/models');
 const db = new Database();
 
-router.post('/create-account/', async (req, res) => {
+router.post('/register/', async (req, res) => {
   const { username, password, email } = req.body;
 
   try {
-    await userValidation({
+    const user = {
       username,
       password,
       email,
-    });
-    const salt = 10;
-    bcrypt.hash(password, salt, async (err, cryptedPass) => {
-      if (err) return res.status(400).send(err);
-      const user = {
-        username,
-        cryptedPass,
-        email,
-      };
-      const response = await db.createUser({ ...user, created_at: new Date() });
-      if (response.error) {
-        return res.status(400).send(response);
-      }
-      console.log(response);
-      res.status(201).json(response);
-    });
+    };
+    await userValidation(user);
+    const response = await db.createUser({ ...user, created_at: new Date() });
+    if (response) {
+      return res.status(400).send(response);
+    }
+    res.status(201).json(response);
   } catch (err) {
     res.status(400).send({
       status: 400,
       response: `There is something wrong😥.`,
       cause: `${err.message}`,
     });
+  }
+});
+
+router.post('/login/', async (req, res) => {
+  const { username, password } = req.body;
+  const userFromDB = await db.checkIsUserExists(username);
+  if (userFromDB.error) return res.send(userFromDB);
+  try {
+    const isMatch = await bcrypt.compare(password, userFromDB.cryptedPass);
+    if (isMatch) {
+      res.status(200).send({
+        message: 'U logged ın🤘🤘💖',
+      });
+    }
+  } catch (err) {
+    res.status(400).send({ err });
   }
 });
 
