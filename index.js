@@ -9,7 +9,7 @@ require('dotenv').config();
 
 // Middlewares
 app.use(require('body-parser').json());
-app.use('/api/', router);
+app.use('/auth/', router);
 app.use(
   helmet({
     contentSecurityPolicy: false,
