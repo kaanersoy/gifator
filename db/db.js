@@ -12,13 +12,34 @@ class Database {
 
   async createUser(userData) {
     const users = await this.db.get('users');
-    const isExists = await users.findOne({ username: userData.username });
+    const isExists = await users.findOne({
+      username: userData.username,
+      email: userData.email,
+    });
     if (isExists) {
-      throw new Error(`${isExists.username} is created before!`);
+      return {
+        status: 400,
+        error: {
+          message: `E-mail or password is created before!`,
+        },
+      };
     }
     const user = await users.insert(userData);
     return user;
   }
-}
 
+  async checkIsUserExists(username) {
+    const users = await this.db.get('users');
+    const isExists = await users.findOne({ username: username });
+    if (isExists) {
+      return isExists;
+    }
+    return {
+      status: 404,
+      error: {
+        message: isExists,
+      },
+    };
+  }
+}
 module.exports.Database = Database;
