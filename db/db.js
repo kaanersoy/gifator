@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 class Database {
   constructor() {
     this.db = this.createConnection();
@@ -22,4 +21,4 @@ class Database {
   }
 }
 
-module.exports = { Database };
+module.exports.Database = Database;
