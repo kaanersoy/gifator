@@ -12,7 +12,7 @@ require('dotenv').config();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: 'http://localhost:8080',
+    origin: `http://localhost:${process.env.FRONT_PORT}`,
     credentials: true,
   })
 );
