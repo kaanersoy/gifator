@@ -13,8 +13,11 @@ It allows you to chat with your friends using only GIFs.
   - [ ] Create token to user autorization
   - [ ] Control token in every page and if it doesn't exist send to login page.
 
-- [ ] Create a Vue app for front-end
-  - [ ] ...
+- [x] Setup a Vue app for front-end
+  - [x] Create a Vue.js app
+  - [ ] Add a register page
+  - [ ] Add a login page
+  - [ ] Add a main page
 
 ### Authors:
 
