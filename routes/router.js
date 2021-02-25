@@ -34,15 +34,18 @@ router.post('/login/', async (req, res) => {
   const userFromDB = await db.checkIsUserExists(username);
   if (userFromDB.error) return res.send(userFromDB);
   const isMatch = await bcrypt.compare(password, userFromDB.password);
-  if (!isMatch)
+  if (!isMatch) {
     return res.status(400).send({
       status: 400,
       message: 'Bad Request😡',
     });
+  }
   const accessToken = jwt.sign(userFromDB, process.env.SECRET_ACCES_TOKEN, {
-    expiresIn: '50s',
+    expiresIn: '1m',
   });
-  req.headers.authorization = accessToken;
+  res.cookie('acces_token', accessToken, {
+    maxAge: 60 * 1000,
+  });
   res.status(200).send({
     message: 'U logged ın🤘🤘💖',
     accessToken,
@@ -51,8 +54,9 @@ router.post('/login/', async (req, res) => {
 
 //Check the 'is user  authenticated?'
 router.get('/selamver', (req, res) => {
+  const cookieToken = req.cookies.access_token;
   res.send({
-    token: req.headers,
+    token: cookieToken,
   });
 });
 
@@ -61,17 +65,16 @@ router.post('/token', (req, res) => {
 });
 
 // Create a acces token, and send as req user.
-function generateToken(req, res, next) {
-  const authHeader = req.headers['autorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-  if (token == null) return res.sendStatus(401);
+// function generateToken(req, res, next) {
+//   const token = authHeader && authHeader.split(' ')[1];
+//   if (token == null) return res.sendStatus(401);
 
-  jwt.verify(token, process.env.SECRET_ACCES_TOKEN, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
-}
+//   jwt.verify(token, process.env.SECRET_ACCES_TOKEN, (err, user) => {
+//     if (err) return res.sendStatus(403);
+//     req.user = user;
+//     next();
+//   });
+// }
 
 function refreshToken(req, res, next) {
   jwt.verify(token, process.env.SECRET_ACCES_TOKEN, (err, user) => {
