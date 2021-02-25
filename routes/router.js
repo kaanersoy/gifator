@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
-const { func } = require('joi');
 const { Database } = require('../db/db');
+const jwt = require('jsonwebtoken');
 const router = require('express').Router();
 const { userValidation } = require('../models/models');
 const db = new Database();
@@ -39,9 +39,46 @@ router.post('/login/', async (req, res) => {
       status: 400,
       message: 'Bad Request😡',
     });
+  const accessToken = jwt.sign(userFromDB, process.env.SECRET_ACCES_TOKEN, {
+    expiresIn: '50s',
+  });
+  req.headers.authorization = accessToken;
   res.status(200).send({
     message: 'U logged ın🤘🤘💖',
+    accessToken,
   });
 });
+
+//Check the 'is user  authenticated?'
+router.get('/selamver', (req, res) => {
+  res.send({
+    token: req.headers,
+  });
+});
+
+router.post('/token', (req, res) => {
+  res.send();
+});
+
+// Create a acces token, and send as req user.
+function generateToken(req, res, next) {
+  const authHeader = req.headers['autorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.SECRET_ACCES_TOKEN, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
+
+function refreshToken(req, res, next) {
+  jwt.verify(token, process.env.SECRET_ACCES_TOKEN, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
 
 module.exports = { router };
