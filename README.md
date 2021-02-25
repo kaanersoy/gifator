@@ -11,13 +11,13 @@ It allows you to chat with your friends using only GIFs.
   - [x] Add `/auth/register` router
   - [x] Add `/auth/login` router
   - [x] Create token to in login page
-  - [ ] Save it in Client's cookies
+  - [x] Save it in Client's cookies
   - [ ] Control token in every page and if it doesn't exist send to login page.
 
 - [x] Setup a Vue app for front-end
   - [x] Create a Vue.js app
+  - [x] Add a login page
   - [ ] Add a register page
-  - [ ] Add a login page
   - [ ] Add a main page
 
 ### Authors:
