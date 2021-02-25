@@ -1,9 +1,24 @@
 # public
 
-## Gifator | Front-end
+## Project setup
+```
+npm install
+```
 
-Front-end app for gifator
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-## Credits
+### Compiles and minifies for production
+```
+npm run build
+```
 
-- [Vue](https://vuejs.org/).
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

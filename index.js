@@ -16,7 +16,6 @@ app.use(
     contentSecurityPolicy: false,
   })
 );
-//Database instance
 
 //Process env destructure
 const { PORT } = process.env;
