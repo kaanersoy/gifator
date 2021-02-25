@@ -1,24 +1,9 @@
 # public
 
-## Project setup
-```
-npm install
-```
+## Gifator | Front-end
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Front-end app for gifator
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Credits
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
