@@ -10,7 +10,8 @@ It allows you to chat with your friends using only GIFs.
   - [x] Get a clean MongoDB connection for carry our users
   - [x] Add `/auth/register` router
   - [x] Add `/auth/login` router
-  - [ ] Create token to user autorization
+  - [x] Create token to in login page
+  - [ ] Save it in Client's cookies
   - [ ] Control token in every page and if it doesn't exist send to login page.
 
 - [x] Setup a Vue app for front-end
