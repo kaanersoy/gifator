@@ -1,6 +1,6 @@
 # Gifator | GIF Chat App!
 
-Allows to you messaging with your friends only using GIFs
+It allows you to chat with your friends using only GIFs.
 
 ## TODO List
 
