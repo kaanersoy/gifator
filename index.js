@@ -8,6 +8,7 @@ const app = express();
 require('dotenv').config();
 
 // Middlewares
+app.use(express.static('public/dist'));
 app.use(require('body-parser').json());
 app.use('/auth/', router);
 app.use(
