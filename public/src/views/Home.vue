@@ -4,26 +4,6 @@
     <div class="content">
       <p>It is a chat app allows to you chat with your friends only using GIFs.</p>
     </div>
-    <div class="form-container">
-      <button
-        @click="
-          () => {
-            this.$router.push('/login');
-          }
-        "
-      >
-        Login
-      </button>
-      <button
-        @click="
-          () => {
-            this.$router.push('/register');
-          }
-        "
-      >
-        Register
-      </button>
-    </div>
   </div>
 </template>
 

@@ -6,9 +6,16 @@
       </div>
       <div class="urls">
         <router-link to="/">Home</router-link>
-        <router-link to="/login">Login</router-link>
-        <router-link to="/dashboard">Dashboard</router-link>
-        <a class="logout" v-if="!this.$store.state.isUserLoggedIn" @click="logout"
+        <router-link v-if="!this.$store.state.isUserLoggedIn" to="/login"
+          >Login</router-link
+        >
+        <router-link v-if="!this.$store.state.isUserLoggedIn" to="/register"
+          >Register</router-link
+        >
+        <router-link v-if="this.$store.state.isUserLoggedIn" to="/dashboard"
+          >Dashboard</router-link
+        >
+        <a class="logout" v-if="this.$store.state.isUserLoggedIn" @click="logout"
           >Logout</a
         >
       </div>
@@ -18,18 +25,38 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'App',
   data: () => ({
     isKeyExists: false,
   }),
+  mounted() {
+    this.checkLogin();
+  },
   methods: {
     logout: function() {
       localStorage.clear();
       this.$store.commit('toggleLogin', {
-        value: true,
+        value: false,
       });
       this.$router.push('/');
+    },
+    checkLogin: async function() {
+      const response = await axios.get('http://localhost:8065/auth', {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('gft_access_token'),
+        },
+      });
+      if (response.data.user) {
+        this.$store.commit('toggleLogin', {
+          value: true,
+        });
+      } else {
+        this.$store.commit('toggleLogin', {
+          value: false,
+        });
+      }
     },
   },
 };

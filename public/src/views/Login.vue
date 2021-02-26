@@ -35,7 +35,9 @@ export default {
       });
       this.loading = false;
       window.localStorage.setItem('gft_access_token', response.data.accessToken);
-
+      this.$store.commit('toggleLogin', {
+        value: true,
+      });
       this.$router.push('/dashboard');
     },
   },

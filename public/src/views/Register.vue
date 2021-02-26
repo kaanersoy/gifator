@@ -27,7 +27,7 @@ export default {
   }),
   methods: {
     register: function() {
-      console.log(this.user);
+      console.log(this.user.password);
     },
   },
 };
