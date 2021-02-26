@@ -8,7 +8,9 @@
         <router-link to="/">Home</router-link>
         <router-link to="/login">Login</router-link>
         <router-link to="/dashboard">Dashboard</router-link>
-        <a class="logout" v-if="!$router.login" @click="logout">Logout</a>
+        <a class="logout" v-if="!this.$store.state.isUserLoggedIn" @click="logout"
+          >Logout</a
+        >
       </div>
     </div>
     <router-view />
@@ -16,32 +18,18 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
   name: 'App',
   data: () => ({
     isKeyExists: false,
   }),
-  mounted() {
-    this.isLoggedIn();
-  },
   methods: {
     logout: function() {
       localStorage.clear();
-      this.$router.push('/');
-    },
-    isLoggedIn: async () => {
-      const API_URL = 'http://localhost:8065/auth/';
-      const result = await axios.get(API_URL, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.gft_access_token,
-        },
+      this.$store.commit('toggleLogin', {
+        value: true,
       });
-      if (result.data.user) {
-        this.isKeyExists = true;
-      } else {
-        this.isKeyExists = false;
-      }
+      this.$router.push('/');
     },
   },
 };

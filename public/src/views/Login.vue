@@ -2,13 +2,16 @@
   <div class="login">
     <h1>Login Page</h1>
     <div class="form-container">
-      <form @submit.prevent="getLogin">
+      <form v-if="!loading" @submit.prevent="getLogin">
         <label for="username">Username</label>
         <input type="text" id="username" v-model="username" placeholder="username" />
         <label for="password">Password</label>
         <input type="text" id="password" v-model="password" placeholder="password" />
         <button>Submit!</button>
       </form>
+    </div>
+    <div v-if="loading" class="loading">
+      <img src="../assets/loading-icon.svg" alt="" />
     </div>
   </div>
 </template>
@@ -17,25 +20,23 @@
 import axios from 'axios';
 export default {
   name: 'Login',
-  data: () => {
-    return {
-      username: 'kaan',
-      password: 'password',
-    };
-  },
+  data: () => ({
+    loading: false,
+    username: 'kaan',
+    password: 'password',
+  }),
   methods: {
-    getLogin: function() {
-      axios
-        .post('http://localhost:8065/auth/login', {
-          username: this.username,
-          password: this.password,
-        })
-        .then(res => {
-          window.localStorage.setItem('gft_access_token', res.data.accessToken);
-        })
-        .then(() => {
-          this.$router.push('/dashboard');
-        });
+    getLogin: async function() {
+      this.loading = true;
+      setTimeout(() => {}, 3000);
+      const response = await axios.post('http://localhost:8065/auth/login', {
+        username: this.username,
+        password: this.password,
+      });
+      this.loading = false;
+      window.localStorage.setItem('gft_access_token', response.data.accessToken);
+
+      this.$router.push('/dashboard');
     },
   },
 };

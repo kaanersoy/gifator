@@ -22,9 +22,14 @@ It allows you to chat with your friends using only GIFs.
   - [x] Save the token to local storage
   - [x] Set visitors only see the home/login/register pages
   - [x] Add a dashboard page
+  - [x] Install the Vuex for carry is logged in state
   - [ ] Fix the bad styles for basic UX
   - [ ] ...
 
 ### Authors:
 
 - Kaan Ersoy / [Github](https://github.com/kaanersoy)
+
+## Credits
+
+- Loading icon : [loading.io](https://loading.io/)
