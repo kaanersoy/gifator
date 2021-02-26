@@ -22,8 +22,8 @@ export default {
   name: 'Login',
   data: () => ({
     loading: false,
-    username: 'kaan',
-    password: 'password',
+    username: '',
+    password: '',
   }),
   methods: {
     getLogin: async function() {
