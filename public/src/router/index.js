@@ -1,8 +1,27 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import Login from '../views/Login.vue';
+import Dashboard from '../views/Dashboard.vue';
+import Register from '../views/Register.vue';
 
 Vue.use(VueRouter);
+
+function sendDashboardIfAutenticated(to, from, next) {
+  if (localStorage.getItem('gft_access_token') == null) {
+    next();
+  } else {
+    next('/dashboard');
+  }
+}
+
+function sendLoginIfNotAuthenticated(to, from, next) {
+  if (localStorage.getItem('gft_access_token') == null) {
+    next('/login');
+  } else {
+    next();
+  }
+}
 
 const routes = [
   {
@@ -13,10 +32,19 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Login.vue'),
+    component: Login,
+    beforeEnter: sendDashboardIfAutenticated,
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: Dashboard,
+    beforeEnter: sendLoginIfNotAuthenticated,
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
   },
 ];
 

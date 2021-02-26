@@ -1,13 +1,15 @@
 <template>
   <div class="login">
     <h1>This is a Login Page!!</h1>
-    <form @submit.prevent="getLogin">
-      <label for="username">Username</label>
-      <input type="text" id="username" v-model="username" placeholder="username" />
-      <label for="password">Password</label>
-      <input type="text" id="password" v-model="password" placeholder="password" />
-      <button>Submit!</button>
-    </form>
+    <div class="login-container">
+      <form @submit.prevent="getLogin">
+        <label for="username">Username</label>
+        <input type="text" id="username" v-model="username" placeholder="username" />
+        <label for="password">Password</label>
+        <input type="text" id="password" v-model="password" placeholder="password" />
+        <button>Submit!</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -30,17 +32,17 @@ export default {
         })
         .then(res => {
           window.localStorage.setItem('gft_access_token', res.data.accessToken);
-        })
-        .then(() => {
-          this.$router.push('/');
         });
+      // .then(() => {
+      //   this.$router.push('/');
+      // });
     },
   },
 };
 </script>
 
 <style>
-.login {
+.form-container {
   width: 30%;
   margin: 0 auto;
 }

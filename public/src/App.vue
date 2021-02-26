@@ -1,8 +1,13 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">About</router-link>
+      <div class="logo">
+        <h1>gifator</h1>
+      </div>
+      <div class="urls">
+        <router-link to="/">Home</router-link>
+        <router-link to="/login">Login</router-link>
+      </div>
     </div>
     <router-view />
   </div>
@@ -10,7 +15,8 @@
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -18,12 +24,18 @@
 }
 
 #nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 30px;
 }
 
 #nav a {
   font-weight: bold;
   color: #2c3e50;
+}
+#nav a + a {
+  margin-left: 30px;
 }
 
 #nav a.router-link-exact-active {
