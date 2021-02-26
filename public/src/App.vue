@@ -8,7 +8,7 @@
         <router-link to="/">Home</router-link>
         <router-link to="/login">Login</router-link>
         <router-link to="/dashboard">Dashboard</router-link>
-        <a class="logout" @click="logout">Logout</a>
+        <a class="logout" v-if="!$router.login" @click="logout">Logout</a>
       </div>
     </div>
     <router-view />
@@ -54,8 +54,7 @@ export default {
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

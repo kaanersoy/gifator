@@ -34,17 +34,26 @@ const routes = [
     name: 'login',
     component: Login,
     beforeEnter: sendDashboardIfAutenticated,
+    meta: {
+      title: 'Login',
+    },
   },
   {
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
     beforeEnter: sendLoginIfNotAuthenticated,
+    meta: {
+      title: 'Dashboard',
+    },
   },
   {
     path: '/register',
     name: 'Register',
     component: Register,
+    meta: {
+      title: 'Register',
+    },
   },
 ];
 
@@ -52,6 +61,14 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+const DEFAULT_TITLE = 'Gifator';
+router.afterEach(to => {
+  Vue.nextTick(() => {
+    document.title = to.meta.title
+      ? `${to.meta.title} | ${DEFAULT_TITLE}`
+      : DEFAULT_TITLE;
+  });
 });
 
 export default router;
