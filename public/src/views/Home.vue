@@ -5,7 +5,7 @@
       <button
         @click="
           () => {
-            this.$router.push('login');
+            this.$router.push('/login');
           }
         "
       >
@@ -14,7 +14,7 @@
       <button
         @click="
           () => {
-            this.$router.push('register');
+            this.$router.push('/register');
           }
         "
       >
@@ -32,3 +32,8 @@ export default {
   components: {},
 };
 </script>
+
+<style scoped scss>
+.home {
+}
+</style>

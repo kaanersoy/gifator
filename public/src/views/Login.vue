@@ -1,7 +1,7 @@
 <template>
   <div class="login">
-    <h1>This is a Login Page!!</h1>
-    <div class="login-container">
+    <h1>Login Page</h1>
+    <div class="form-container">
       <form @submit.prevent="getLogin">
         <label for="username">Username</label>
         <input type="text" id="username" v-model="username" placeholder="username" />
@@ -32,10 +32,10 @@ export default {
         })
         .then(res => {
           window.localStorage.setItem('gft_access_token', res.data.accessToken);
+        })
+        .then(() => {
+          this.$router.push('/dashboard');
         });
-      // .then(() => {
-      //   this.$router.push('/');
-      // });
     },
   },
 };
