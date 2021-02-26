@@ -32,16 +32,20 @@ router.post('/register/', async (req, res) => {
       email,
     };
     await userValidation(user);
-    const response = await db.createUser({ ...user, created_at: new Date() });
-    if (response) {
-      return res.status(400).send(response);
+    const createdUser = await db.createUser({ ...user, created_at: new Date() });
+    if (createdUser.error) {
+      res.status(400);
+      res.send({ error: createdUser.error.message });
+    } else {
+      res.status(201).send({
+        message: 'User is created',
+        created_user: { name: createdUser.username },
+      });
     }
-    res.status(201).json(response);
   } catch (err) {
-    res.status(400).send({
-      status: 400,
-      response: `There is something wrong😥.`,
-      cause: `${err.message}`,
+    res.status(403).send({
+      message: `There is something wrong😥.`,
+      error: `${err.message}`,
     });
   }
 });
