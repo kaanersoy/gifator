@@ -22,8 +22,8 @@ It allows you to chat with your friends using only GIFs.
   - [x] Save the token to local storage
   - [x] Set visitors only see the home/login/register pages
   - [x] Add a dashboard page
-  - [ ] Add a dashboard page
-  - [ ] Add a dashboard page
+  - [ ] Fix the bad styles for basic UX
+  - [ ] ...
 
 ### Authors:
 
