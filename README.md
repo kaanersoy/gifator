@@ -11,14 +11,17 @@ It allows you to chat with your friends using only GIFs.
   - [x] Add `/auth/register` router
   - [x] Add `/auth/login` router
   - [x] Create token to in login page
-  - [x] Save it in Client's cookies
   - [ ] Control token in every page and if it doesn't exist send to login page.
+  - [ ] checkTokenInUser if set verify user and `req.user` to be user
+  - [ ] checkTokenInUser if defined redireck dashboard
 
 - [x] Setup a Vue app for front-end
+
   - [x] Create a Vue.js app
   - [x] Add a login page
-  - [ ] Add a register page
-  - [ ] Add a main page
+  - [ ] Save the token to local storage
+  - [ ] Set visitors only see the home page
+  - [ ] Add a dashboard page
 
 ### Authors:
 

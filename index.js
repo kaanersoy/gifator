@@ -13,18 +13,16 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: `http://localhost:${process.env.FRONT_PORT}`,
-    credentials: true,
   })
 );
 app.use(express.static('public/dist'));
 app.use(require('body-parser').json());
 app.use('/auth/', router);
-// app.use(
-//   helmet({
-//     credentials: true,
-//     contentSecurityPolicy: false,
-//   })
-// );
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 
 //Process env destructure
 const { PORT } = process.env;

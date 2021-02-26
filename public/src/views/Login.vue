@@ -24,16 +24,10 @@ export default {
   methods: {
     getLogin: function() {
       axios
-        .post(
-          'http://localhost:8065/auth/login',
-          {
-            username: this.username,
-            password: this.password,
-          },
-          {
-            withCredentials: true,
-          }
-        )
+        .post('http://localhost:8065/auth/login', {
+          username: this.username,
+          password: this.password,
+        })
         .then(res => console.log(res));
     },
   },

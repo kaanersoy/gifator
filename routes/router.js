@@ -41,7 +41,7 @@ router.post('/login/', async (req, res) => {
     });
   }
   const accessToken = jwt.sign(userFromDB, process.env.SECRET_ACCES_TOKEN, {
-    expiresIn: '1m',
+    expiresIn: '2m',
   });
   res.cookie('acces_token', accessToken, {
     maxAge: 60 * 1000,
@@ -54,7 +54,6 @@ router.post('/login/', async (req, res) => {
 
 //Check the 'is user  authenticated?'
 router.get('/selamver', (req, res) => {
-  const cookieToken = req.cookies.access_token;
   res.send({
     token: cookieToken,
   });
