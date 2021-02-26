@@ -9,6 +9,19 @@ const middlewares = require('./middlewares');
 // Router Middlewares
 router.use(middlewares.verifyToken);
 
+router.get('/', (req, res) => {
+  if (req.user) {
+    res.status(200).send({
+      user: req.user,
+    });
+  } else {
+    res.status(401).send({
+      status: 401,
+      message: 'JWT not authorized, or expired!',
+    });
+  }
+});
+
 router.post('/register/', async (req, res) => {
   const { username, password, email } = req.body;
 
@@ -62,7 +75,7 @@ router.post('/login/', async (req, res) => {
     },
     process.env.SECRET_ACCES_TOKEN,
     {
-      expiresIn: '2m',
+      expiresIn: '10m',
     }
   );
   res.status(200).send({
