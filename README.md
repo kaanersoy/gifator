@@ -19,7 +19,7 @@ It allows you to chat with your friends using only GIFs.
 
   - [x] Create a Vue.js app
   - [x] Add a login page
-  - [ ] Save the token to local storage
+  - [x] Save the token to local storage
   - [ ] Set visitors only see the home page
   - [ ] Add a dashboard page
 

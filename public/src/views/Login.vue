@@ -28,7 +28,12 @@ export default {
           username: this.username,
           password: this.password,
         })
-        .then(res => console.log(res));
+        .then(res => {
+          window.localStorage.setItem('gft_access_token', res.data.accessToken);
+        })
+        .then(() => {
+          this.$router.push('/');
+        });
     },
   },
 };

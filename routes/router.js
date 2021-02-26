@@ -31,56 +31,45 @@ router.post('/register/', async (req, res) => {
 
 router.post('/login/', async (req, res) => {
   const { username, password } = req.body;
+
+  // control the database does user exists
   const userFromDB = await db.checkIsUserExists(username);
-  if (userFromDB.error) return res.send(userFromDB);
+  if (userFromDB.error) {
+    return res.status(404).send({
+      status: 404,
+      message: 'User not found!',
+    });
+  }
+
+  //Control the users password and bcryted password
   const isMatch = await bcrypt.compare(password, userFromDB.password);
   if (!isMatch) {
     return res.status(400).send({
       status: 400,
-      message: 'Bad Request😡',
+      message: 'Password is not matching!',
     });
   }
-  const accessToken = jwt.sign(userFromDB, process.env.SECRET_ACCES_TOKEN, {
-    expiresIn: '2m',
-  });
-  res.cookie('acces_token', accessToken, {
-    maxAge: 60 * 1000,
-  });
+
+  //Create a token carries user infos:
+  const accessToken = jwt.sign(
+    {
+      id: userFromDB._id,
+      username: userFromDB.username,
+    },
+    process.env.SECRET_ACCES_TOKEN,
+    {
+      expiresIn: '2m',
+    }
+  );
   res.status(200).send({
-    message: 'U logged ın🤘🤘💖',
+    message: 'Logging In!👇',
     accessToken,
   });
 });
 
-//Check the 'is user  authenticated?'
-router.get('/selamver', (req, res) => {
-  res.send({
-    token: cookieToken,
-  });
-});
-
-router.post('/token', (req, res) => {
-  res.send();
-});
-
-// Create a acces token, and send as req user.
-// function generateToken(req, res, next) {
-//   const token = authHeader && authHeader.split(' ')[1];
-//   if (token == null) return res.sendStatus(401);
-
-//   jwt.verify(token, process.env.SECRET_ACCES_TOKEN, (err, user) => {
-//     if (err) return res.sendStatus(403);
-//     req.user = user;
-//     next();
-//   });
-// }
-
-function refreshToken(req, res, next) {
-  jwt.verify(token, process.env.SECRET_ACCES_TOKEN, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
-}
+// refrest the token.
+// router.post('/token', (req, res) => {
+//   res.send();
+// });
 
 module.exports = { router };

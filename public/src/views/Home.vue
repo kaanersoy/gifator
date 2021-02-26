@@ -1,18 +1,34 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Welcome to home page of Gifator</h1>
+    <div class="form-container">
+      <button
+        @click="
+          () => {
+            this.$router.push('login');
+          }
+        "
+      >
+        Login
+      </button>
+      <button
+        @click="
+          () => {
+            this.$router.push('register');
+          }
+        "
+      >
+        Register
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
-  }
-}
+  components: {},
+};
 </script>
