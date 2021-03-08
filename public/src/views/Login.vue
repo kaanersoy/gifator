@@ -38,7 +38,7 @@ export default {
       this.$store.commit('toggleLogin', {
         value: true,
       });
-      this.$router.push('/dashboard');
+      this.$router.push('/friends');
     },
   },
 };

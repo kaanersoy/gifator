@@ -25,15 +25,11 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
   name: 'App',
   data: () => ({
     isKeyExists: false,
   }),
-  mounted() {
-    this.checkLogin();
-  },
   methods: {
     logout: function() {
       localStorage.clear();
@@ -41,22 +37,6 @@ export default {
         value: false,
       });
       this.$router.push('/');
-    },
-    checkLogin: async function() {
-      const response = await axios.get('http://localhost:8065/auth', {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('gft_access_token'),
-        },
-      });
-      if (response.data.user) {
-        this.$store.commit('toggleLogin', {
-          value: true,
-        });
-      } else {
-        this.$store.commit('toggleLogin', {
-          value: false,
-        });
-      }
     },
   },
 };

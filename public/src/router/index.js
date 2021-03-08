@@ -4,19 +4,20 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Friends from '../views/Friends.vue';
 import Register from '../views/Register.vue';
+import store from '../store/store'
 
 Vue.use(VueRouter);
 
 function sendDashboardIfAutenticated(to, from, next) {
-  if (localStorage.getItem('gft_access_token') == null) {
-    next();
-  } else {
+  if (store.state.isUserLoggedIn) {
     next('/friends');
+  } else {
+    next();
   }
 }
 
 function sendLoginIfNotAuthenticated(to, from, next) {
-  if (localStorage.getItem('gft_access_token') == null) {
+  if (!store.state.isUserLoggedIn) {
     next('/login');
   } else {
     next();
@@ -57,6 +58,19 @@ const routes = [
   },
 ];
 
+function checkLogin() {
+  fetch('http://localhost:8065/auth', {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('gft_access_token'),
+    },
+  }).then(res => res.json()).then(res => {
+    if(res.user){
+      return store.commit('toggleLogin', { value: true })
+    }
+    store.commit('toggleLogin', { value: false })
+  })
+}
+
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -70,5 +84,7 @@ router.afterEach(to => {
       : DEFAULT_TITLE;
   });
 });
+
+router.beforeEach(checkLogin())
 
 export default router;

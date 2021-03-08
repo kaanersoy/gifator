@@ -18,6 +18,14 @@ export default {
     user: null,
     message: 'yey',
   }),
+  sockets: {
+    connect: function() {
+      console.log('socket connected');
+    },
+    customEmit: function(data) {
+      console.log('Message Arrived, ', data);
+    },
+  },
   mounted() {
     const API_URL = 'http://localhost:8065/auth/';
     axios
@@ -30,7 +38,7 @@ export default {
   },
   methods: {
     sendSocketConnection() {
-      console.log(this.message);
+      this.$socket.emit('message', this.message);
     },
   },
 };

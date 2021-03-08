@@ -8,7 +8,7 @@ Vue.use(new VueSocketIO({
   debug: true,
   connection: 'http://localhost:8065',
   options:{
-    path: '/socket/'
+    path: '/socket/',
   }
 }))
 

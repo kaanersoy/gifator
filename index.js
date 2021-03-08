@@ -2,10 +2,10 @@
 const express = require('express');
 const helmet = require('helmet');
 const { router } = require('./routes/router');
+const { friendRouter } = require('./routes/friend-routes');
 const cors = require('cors');
 //App configuration
 const app = express();
-
 require('dotenv').config();
 
 // Middlewares
@@ -17,12 +17,12 @@ app.use(
 app.use(express.static('public/dist'));
 app.use(require('body-parser').json());
 app.use('/auth/', router);
+app.use('/friend/', friendRouter);
 app.use(
   helmet({
     contentSecurityPolicy: false,
   })
 );
-
 
 
 //Process env destructure
@@ -40,6 +40,10 @@ const io = require('socket.io')(http,{
 
 io.on('connection', (socket)=>{
   console.log("user connected ")
+  socket.on('message', function(msg){
+    io.emit('customEmit', {message: 'yey'})
+    console.log('message arrived ', msg)
+  })
 })
 
 http.listen(PORT, () => {
