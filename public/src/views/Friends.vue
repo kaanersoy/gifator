@@ -1,15 +1,22 @@
 <template>
   <section>
     <h3 v-if="user">Welcome, {{ user.username }}!</h3>
+    <div class="form-container">
+      <form @submit.prevent="">
+        <input v-model="message" type="text" />
+        <button @click="sendSocketConnection">Gonder</button>
+      </form>
+    </div>
   </section>
 </template>
 
 <script>
 import axios from 'axios';
 export default {
-  name: 'Dashboard',
+  name: 'Friends',
   data: () => ({
     user: null,
+    message: 'yey',
   }),
   mounted() {
     const API_URL = 'http://localhost:8065/auth/';
@@ -20,6 +27,11 @@ export default {
         },
       })
       .then(res => (this.user = res.data.user));
+  },
+  methods: {
+    sendSocketConnection() {
+      console.log(this.message);
+    },
   },
 };
 </script>

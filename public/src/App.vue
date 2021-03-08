@@ -12,8 +12,8 @@
         <router-link v-if="!this.$store.state.isUserLoggedIn" to="/register"
           >Register</router-link
         >
-        <router-link v-if="this.$store.state.isUserLoggedIn" to="/dashboard"
-          >Dashboard</router-link
+        <router-link v-if="this.$store.state.isUserLoggedIn" to="/friends"
+          >Friends</router-link
         >
         <a class="logout" v-if="this.$store.state.isUserLoggedIn" @click="logout"
           >Logout</a

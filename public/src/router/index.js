@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
-import Dashboard from '../views/Dashboard.vue';
+import Friends from '../views/Friends.vue';
 import Register from '../views/Register.vue';
 
 Vue.use(VueRouter);
@@ -11,7 +11,7 @@ function sendDashboardIfAutenticated(to, from, next) {
   if (localStorage.getItem('gft_access_token') == null) {
     next();
   } else {
-    next('/dashboard');
+    next('/friends');
   }
 }
 
@@ -39,12 +39,12 @@ const routes = [
     },
   },
   {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: Dashboard,
+    path: '/friends',
+    name: 'friends',
+    component: Friends,
     beforeEnter: sendLoginIfNotAuthenticated,
     meta: {
-      title: 'Dashboard',
+      title: 'Friends',
     },
   },
   {
