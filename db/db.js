@@ -49,22 +49,22 @@ class Database {
   }
 
   async createFriend(data){
-    const {from, to } = data; 
-    const friends = await this.db.get('friends');
-    const users = await this.db.get('users');
-    const isExists = await friends.findOne({from});
-    const toUser = await users.findOne({email: to});
-    if(isExists && toUser){
-      return {
-        message: "User created",
-        from: isExists.email,
-        to: toUser.email,
-        created: Date()
-      }
-    }
-    return{
-      message: "User not exists or you are not authorized"
-    }
+    const {from, to } = data;
+    // const friends = await this.db.get('friends');
+    // const users = await this.db.get('users');
+    // const isExists = await friends.findOne({from});
+    // const toUser = await users.findOne({email: to});
+    // if(isExists && toUser){
+    //   return {
+    //     message: "User created",
+    //     from: isExists.email,
+    //     to: toUser.email,
+    //     created: Date()
+    //   }
+    // }
+    // return{
+    //   message: "User not exists or you are not authorized"
+    // }
   }
 }
 module.exports.Database = Database;

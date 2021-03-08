@@ -1,16 +1,22 @@
 const { Database } = require('../db/db');
+const {verifyToken} = require('./middlewares')
 const friendRouter = require('express').Router();
 const db = new Database();
 
 
-friendRouter.post('/add', async (req,res) => {
-    const {from,to} = req.body;
+friendRouter.post('/add', verifyToken, async (req,res) => {
+  const {toos} = req.body;
+  if(req.user.id){
     const friendRequest = {
-        from,
-        to,
+      from: req.user.id,
+      to: toos,
     }
     const response = await db.createFriend(friendRequest);
-    res.send(response);
+    return res.send(response).status(200);
+  }
+  res.send({
+    error: 'bad request'
+  }).status(400)
 })
 
 

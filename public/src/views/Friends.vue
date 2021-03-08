@@ -4,7 +4,7 @@
     <div class="form-container">
       <form @submit.prevent="">
         <input v-model="message" type="text" />
-        <button @click="sendSocketConnection">Gonder</button>
+        <button @click="addFriend">Gonder</button>
       </form>
     </div>
   </section>
@@ -39,6 +39,21 @@ export default {
   methods: {
     sendSocketConnection() {
       this.$socket.emit('message', this.message);
+    },
+    async addFriend() {
+      const sendbody = {
+        toos: `kaanersoy12121@gmail.com`,
+      };
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.gft_access_token}`,
+        },
+        body: JSON.stringify(sendbody),
+      };
+      fetch('http://localhost:8065/friend/add', options).then(res => res.json());
+      // .then(res => console.log(res));
     },
   },
 };
