@@ -17,7 +17,7 @@ app.use(
 app.use(express.static('public/dist'));
 app.use(require('body-parser').json());
 app.use('/auth/', router);
-app.use('/friend/', friendRouter);
+app.use('/api/friends/', friendRouter);
 app.use(
   helmet({
     contentSecurityPolicy: false,
